@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<ol>
+    {% for link in links %}
+        <li>
+            <a href="{{link.url}}">
+                <strong>{{link.title}}</strong>
+            </a>
+        </li>
+    {% endfor %}
+</ol>
+{% endblock %}
