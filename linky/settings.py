@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration',
     'linkey',
+    'django.contrib.sites',
+    'django_comments',
 ]
+
+SITE_ID = 1234
 
 from django.core.urlresolvers import reverse_lazy
 
