@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load comments %}
+{% load widget_tweaks %}
 
 {% block content %}
 <style>
@@ -8,15 +9,19 @@
   }
 </style>
 
-<h2><a href="{{ object.link }}">{{ object.title }}</a></h2>
+<h2><a href="{{ object.url }}">{{ object.title }}</a></h2>
 {% if object.submitter == user %}
-  <a href="{% url 'link_update' pk=object.pk %}">Edit</a> | 
-  <a href="{% url 'link_delete' pk=object.pk %}">Delete</a>
+<div class="editoptions">
+    <a href="{% url 'link_update' pk=object.pk %}">Edit</a>
+    <a href="{% url 'link_delete' pk=object.pk %}">Delete</a>
+</div>
 {% endif %}
 
+{% if object.description %}
 <div class="desc">
   {{ object.description }}
 </div>
+{% endif %}
 
 <div class="comments">
   <h3>Comments</h3>
@@ -24,9 +29,10 @@
   <div class="comment_form">
 {% if user.is_authenticated %}
   {% get_comment_form for object as form %}
-  <form action="{% comment_form_target %}" method="POST">
+  <form class="form-group" action="{% comment_form_target %}" method="POST">
     {% csrf_token %}
-    {{ form.comment }}
+    <label for="comment">Your comment: </label>
+    {% render_field form.comment class+="form-control" %}
     {{ form.honeypot }}
     {{ form.content_type }}
     {{ form.object_pk }}
@@ -35,15 +41,15 @@
     <input type="hidden" name="name" value="{{ user }}" />
     <input type="hidden" name="email" value="{{ user.email|default:'d@ummy.com' }}" />
     <input type="hidden" name="url" value="" />
-    <input type="hidden" name="next" 
+    <input type="hidden" name="next"
 	   value="{% url 'link_detail' pk=object.id %}" />
-    <input type="submit" value="Add comment" id="id_submit" />
+    <input type="submit" class="btn btn-primary" style="margin-top: 5px" value="Add comment" id="id_submit" />
   </form>
 {% else %}
   <p>Please <a href="{% url 'login' %}">log in
   </a> to leave a comment.</p>
 {% endif %}
-  </div>
+  </div class="form-control">
 
 
   {% render_comment_list for object %}

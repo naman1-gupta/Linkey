@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
 <h2>New User?</h2>
@@ -6,8 +7,10 @@
 <p>Invalid data. Please try again.</p>
 {% endif %}
 <form method="post" action="">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Register" />
+  <div class="form-group">
+    {% csrf_token %}
+    {{form.as_p }}
+    <input type="submit" value="Register" />
+  </div>
 </form>
 {% endblock %}

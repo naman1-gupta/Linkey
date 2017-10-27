@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'linkey',
     'django.contrib.sites',
     'django_comments',
+    'widget_tweaks',
 ]
 
 SITE_ID = 1234

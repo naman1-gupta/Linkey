@@ -8,25 +8,36 @@
 {% endif %}
     {% for link in links %}
     <form method="post" action="{% url 'vote' %}" class="vote_form">
-        <li>
-            [{{link.votes}}]
-            {% csrf_token %}
-            <input type="hidden" id="id_link" name="link" class="hidden_id" value="{{link.pk}}"/>
-            <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{user.pk}}"/>
-            {% if not user.is_authenticated %}
-            <button disabled title="Please login to vote">+</button>
-            {% elif link.pk not in voted %}
-            <button>+</button>
-            {% else %}
-            <button>-</button>
-            {% endif %}
-            <a href="{% url 'link_detail' pk=link.pk %}"><b>{{link.title}}</b>
-                {% get_comment_count for link as comment_count %}
-                {{comment_count}} comment{{comment_count | pluralize}}
-            </a>
-            <a href="{{link.url}}">
-                <strong>{{link.title}}</strong>
-            </a>
+        <li class="linkitem">
+            <div class="float-left">
+                {% csrf_token %}
+                <input type="hidden" id="id_link" name="link" class="hidden_id" value="{{link.pk}}"/>
+                <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{user.pk}}"/>
+                {% if not user.is_authenticated %}
+                <button disabled title="Please login to vote">+</button>
+                {% elif link.pk not in voted %}
+                <button>^</button>
+                {% else %}
+                <button>-</button>
+                {% endif %}
+
+                <span class="votecount">[{{link.votes}}]</span>
+            </div>
+            <div class="float-left linkdetail">
+                {% if link.url %}
+                <a href="{{link.url}}">
+                            <strong>{{link.title}}</strong>
+                </a>
+                {% else %}
+                <a href="{% url 'link_detail' pk=link.pk %}">
+                        <strong>{{link.title}}</strong>
+                </a>
+                {% endif %}
+                <p class="commentcount"><a href="{% url 'link_detail' pk=link.pk %}">{% get_comment_count for link as comment_count %} {{comment_count}} comment{{comment_count | pluralize}}</a></p>
+
+            </div>
+            <div class="clearfix"></div>
+
         </li>
     </form>
     {% endfor %}
@@ -34,16 +45,22 @@
 {% if is_paginated %}
 <div class="pagination">
     {% if page_obj.has_previous %}
-    <a href="?page={{page_obj.previous_page_number }}">Previous &raquo;</a>
+    <div class="paginationbtn">
+        <a href="?page={{page_obj.previous_page_number }}">Previous &laquo;</a>
+    </div>
     {% endif %}
     {% if page_obj.has_next %}
-    <a href="?page={{page_obj.next_page_number }}">More &raquo;</a>
+    <div class="paginationbtn">
+        <a href="?page={{page_obj.next_page_number }}">More &raquo;</a>
+    </div>
     {% endif %}
 </div>
 {% endif %}
 
-<blockquote style="background-color: #ddd; padding: 4px; border-radius: 10px; margin: 10px 0; color: #666; font-size: smaller; text-shadow: rgba(255,255,255,0.8) 1px 1px 0;">
-    {{ randomquip.comment|truncatechars:140 }}
-</blockquote>
+<div class="container-fluid">
+    <p style="font-size: 15px;margin: 2px; margin-left: -16px;">Random comment: {{ randomquip.comment|truncatechars:140 }}</p>
+
+
+</div>
 
 {% endblock %}
