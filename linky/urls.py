@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required as auth
 from django.contrib import admin
 from linkey.views import LinkListView
 from django.contrib.auth.views import login, logout_then_login
-from linkey.views import UserProfileDetailView, UserProfileEditView, LinkCreateView, LinkDetailView, LinkUpdateView, LinkDeleteView
+from linkey.views import UserProfileDetailView, UserProfileEditView, LinkCreateView, LinkDetailView, LinkUpdateView, LinkDeleteView, VoteFormView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^link/update/(?P<pk>\d+)/$', auth(LinkUpdateView.as_view()), name='link_update'),
     url(r'^link/delete/(?P<pk>\d+)/$', auth(LinkDeleteView.as_view()), name='link_delete'),
     url(r'^comments/', include('django_comments.urls')),
+    url(r'^vote/$', auth(VoteFormView.as_view()), name="vote"),
 ]

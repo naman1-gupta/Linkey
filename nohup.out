@@ -1,0 +1,14 @@
+  File "rerank.py", line 15
+    if __name__ = "__main__":
+                ^
+SyntaxError: invalid syntax
+  File "rerank.py", line 15
+    if __name__ = "__main__":
+                ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "rerank.py", line 3, in <module>
+    from linkey.models import Link
+  File "/Users/naman/Desktop/dev/pythonstuff/django/reddit/linky/linkey/models.py", line 1, in <module>
+    from django.db import models
+ImportError: No module named django.db
