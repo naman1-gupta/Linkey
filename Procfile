@@ -1,1 +1,1 @@
-web: gunicorn linky.wsgi:application --log-file -
+web: gunicorn linky.wsgi --log-file -
