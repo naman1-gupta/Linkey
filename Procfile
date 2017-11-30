@@ -1,0 +1,1 @@
+web: gunicorn linky.wsgi:linkey --log-file -
